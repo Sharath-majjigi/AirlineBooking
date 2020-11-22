@@ -145,7 +145,6 @@ void ask(char str[]){
 
 int main()
 {
-   
     City_Head = NULL;
     int n_;
     ask("city");
