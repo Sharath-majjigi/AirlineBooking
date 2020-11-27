@@ -16,7 +16,6 @@ struct hotel{
     int rooms;
     struct hotel* next_hotel;
 };
-
 /* 
 
 This is the definition for city node
