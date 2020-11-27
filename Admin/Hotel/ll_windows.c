@@ -206,7 +206,6 @@ int main()
         addcity();
         ask("city");
     }
-    printf("%s",(choose_city(City_Head->next_city,"DELHI"))->name);
     displaycities();
 
     return 0;
