@@ -16,7 +16,6 @@ struct hotel{
     int rooms;
     struct hotel* next_hotel;
 };
-
 /* 
 
 This is the definition for city node
@@ -33,6 +32,20 @@ struct city{
 };
 struct city* City_Head; //Think of this as first for our linked list 
 
+
+/*
+This function searches city name that if it is available is the list.
+*/
+struct city *choose_city(struct city * head, char city_name [50]){
+    struct city * city_ptr = head;
+    while(city_ptr->next_city != NULL){
+        if(city_ptr->name==city_name)
+            return city_ptr;
+        city_ptr=city_ptr->next_city;
+    }
+    return NULL;
+}
+
 /*
 
 This functions adds a hotel node for a particular city
@@ -43,9 +56,9 @@ Taking this city node it gets the link for the HOTELS
 And appends a hotel type node in a FILO fashion 
 
 */
-void addhotel(struct city* C){
 
     //Variable Declarations
+void addhotel(struct city* C){
     struct hotel* Hotel_Head = (struct hotel*)malloc(sizeof(struct hotel));
     Hotel_Head = C->HOTELS;
     char hotelname[30];
@@ -132,12 +145,10 @@ void addcity(){
 /*
 Function to display the hotels
 */
-void displayhotels(struct city* C,int city_name_length){
+void displayhotels(struct city* C){
     //Variable Declarations
-    struct hotel* Head = (struct hotel*)malloc(sizeof(struct hotel));
-    struct hotel* temp = (struct hotel*)malloc(sizeof(struct hotel));
-    Head = C->HOTELS;
-    temp = Head;
+    struct hotel* Head  = C->HOTELS;
+    struct hotel* temp = Head;
 
     //Display 
     /*
@@ -156,8 +167,7 @@ Function to display cities
 */
 void displaycities(){
     //Variable Declarations
-    struct city* temp = (struct city*)malloc(sizeof(struct city));
-    temp = City_Head;
+    struct city* temp = City_Head;
 
     //Display 
     /*
@@ -167,7 +177,7 @@ void displaycities(){
     while(temp != NULL){
         printf("%s\n\n",temp->name);
         printf("\n");
-        displayhotels(temp,formatting(strlen(temp->name),getwidth()) - strlen(temp->name));
+        displayhotels(temp);
         temp = temp->next_city;
     }
 }
@@ -197,5 +207,6 @@ int main()
         ask("city");
     }
     displaycities();
+
     return 0;
 }
