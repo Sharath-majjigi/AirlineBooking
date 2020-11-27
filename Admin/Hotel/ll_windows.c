@@ -33,8 +33,9 @@ struct city{
 struct city* City_Head; //Think of this as first for our linked list 
 
 
-// This function searches city name that if it is available is the list.
-
+/*
+This function searches city name that if it is available is the list.
+*/
 struct city *choose_city(struct city * head, char city_name [50]){
     struct city * city_ptr = head;
     while(city_ptr->next_city != NULL){
@@ -42,6 +43,7 @@ struct city *choose_city(struct city * head, char city_name [50]){
             return city_ptr;
         city_ptr=city_ptr->next_city;
     }
+    return NULL;
 }
 
 /*
@@ -143,12 +145,10 @@ void addcity(){
 /*
 Function to display the hotels
 */
-void displayhotels(struct city* C,int city_name_length){
+void displayhotels(struct city* C){
     //Variable Declarations
-    struct hotel* Head = (struct hotel*)malloc(sizeof(struct hotel));
-    struct hotel* temp = (struct hotel*)malloc(sizeof(struct hotel));
-    Head = C->HOTELS;
-    temp = Head;
+    struct hotel* Head  = C->HOTELS;
+    struct hotel* temp = Head;
 
     //Display 
     /*
@@ -167,8 +167,7 @@ Function to display cities
 */
 void displaycities(){
     //Variable Declarations
-    struct city* temp = (struct city*)malloc(sizeof(struct city));
-    temp = City_Head;
+    struct city* temp = City_Head;
 
     //Display 
     /*
@@ -178,7 +177,7 @@ void displaycities(){
     while(temp != NULL){
         printf("%s\n\n",temp->name);
         printf("\n");
-        displayhotels(temp,formatting(strlen(temp->name),getwidth()) - strlen(temp->name));
+        displayhotels(temp);
         temp = temp->next_city;
     }
 }
@@ -207,6 +206,7 @@ int main()
         addcity();
         ask("city");
     }
+    printf("%s",(choose_city(City_Head->next_city,"DELHI"))->name);
     displaycities();
 
     return 0;

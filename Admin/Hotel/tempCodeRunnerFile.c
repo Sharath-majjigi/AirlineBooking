@@ -1,1 +1,0 @@
-displayhotels(temp,formatting(strlen(temp->name),getwidth()) - strlen(temp->name));
