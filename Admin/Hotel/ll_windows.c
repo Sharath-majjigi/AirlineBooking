@@ -33,6 +33,18 @@ struct city{
 };
 struct city* City_Head; //Think of this as first for our linked list 
 
+
+// This function searches city name that if it is available is the list.
+
+struct city *choose_city(struct city * head, char city_name [50]){
+    struct city * city_ptr = head;
+    while(city_ptr->next_city != NULL){
+        if(city_ptr->name==city_name)
+            return city_ptr;
+        city_ptr=city_ptr->next_city;
+    }
+}
+
 /*
 
 This functions adds a hotel node for a particular city
@@ -43,9 +55,9 @@ Taking this city node it gets the link for the HOTELS
 And appends a hotel type node in a FILO fashion 
 
 */
-void addhotel(struct city* C){
 
     //Variable Declarations
+void addhotel(struct city* C){
     struct hotel* Hotel_Head = (struct hotel*)malloc(sizeof(struct hotel));
     Hotel_Head = C->HOTELS;
     char hotelname[30];
@@ -197,5 +209,6 @@ int main()
         ask("city");
     }
     displaycities();
+
     return 0;
 }
