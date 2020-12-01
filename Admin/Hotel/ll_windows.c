@@ -32,19 +32,6 @@ struct city{
 };
 struct city* City_Head; //Think of this as first for our linked list 
 
-/* this function displays the searched city name and 
-the hotels list in that city */
- 
-void displaynodecity(struct city * c)
-{
- struct hotel *h=c->HOTELS;
-printf("%s",c->name);
-while(h!=NULL);
-{
-printf("%s\n",h->name);
-h=h->next_hotel; 
-}
-}
 /*
 This function searches city name that if it is available is the list.
 */
