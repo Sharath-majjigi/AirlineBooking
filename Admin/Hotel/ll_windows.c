@@ -50,8 +50,10 @@ This function searches city name that if it is available is the list.
 */
 struct city *choose_city(struct city * head, char city_name [50]){
     struct city * city_ptr = head;
+    int r;
     while(city_ptr->next_city != NULL){
-        if(city_ptr->name==city_name)
+        r=strcmp(city_ptr->name,city_name);
+        if(r==0)
             return city_ptr;
         city_ptr=city_ptr->next_city;
     }
@@ -67,7 +69,7 @@ void displaynodecity(struct city * c)
 {
  struct hotel *h=c->HOTELS;
 printf("%s",c->name);
-while(h!=NULL);
+while(h!=NULL)
 {
 printf("%s\n",h->name);
 h=h->next_hotel; 
@@ -130,7 +132,8 @@ void addhotel(struct city* C){
 This function adds N hotels
 */
 void addNhotels(struct city* C,int n){
-    for(int i = 0; i < n; i++){
+  int i;
+    for(i = 0; i < n; i++){
         addhotel(C);
     }
 }
