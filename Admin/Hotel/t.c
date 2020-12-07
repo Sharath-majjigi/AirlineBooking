@@ -10,7 +10,7 @@ void extractCity(FILE *file, char str[90])
         str[j++] = character;
     }
 }
-void extractHotel(FILE *file, char str_h[90],double *p, int *r)
+void extractHotel(FILE *file, char str_h[90], double *p, int *r)
 {
     char str[200];
     char character, *c;
@@ -18,8 +18,9 @@ void extractHotel(FILE *file, char str_h[90],double *p, int *r)
     double price;
     int rooms;
     int j = 0, i = 0;
-    while((character = fgetc(file)) != ','){
-        str[j++]=character;
+    while ((character = fgetc(file)) != ',')
+    {
+        str[j++] = character;
     }
     str[j] = '|';
     j = 0;
@@ -35,16 +36,14 @@ void extractHotel(FILE *file, char str_h[90],double *p, int *r)
         j++;
     }
     j++;
-    price = strtod(temp,&c);
-    printf("\nPRICE\n%lf",price);
+    price = strtod(temp, &c);
     i = 0;
     while (str[j] != '|')
     {
         temp[i++] = str[j];
         j++;
     }
-    rooms  = atoi(temp);
-    printf("\nROOMS\n%d\n",rooms);
+    rooms = atoi(temp);
     *p = price;
     *r = rooms;
 }
@@ -58,19 +57,26 @@ int main()
     char hotels[50][40];
     char c;
     char str[100];
-    int count = 0;
+    int count, count_;
+    count = 0;
+    count_ = 0;
     char *_;
     char hotelname[40];
     double *price = (double *)malloc(sizeof(double));
     int *rooms = (int *)malloc(sizeof(int));
-    while (!count)
+    while (count != 2)
     {
         char s[90];
         extractCity(F, s);
         printf("\n\n%s\n\n", s);
-        extractHotel(F,hotelname, price, rooms);
-        printf("\nworks\n%s%lf",hotelname,*price);
-       /* int j = 0;
+        count_= 0;
+        while (count_ != 2)
+        {
+            extractHotel(F, hotelname, price, rooms);
+            printf("\nworks\n%s%lf", hotelname, *price);
+            count_++;
+        }
+        /* int j = 0;
         while ((c = fgetc(F)) != '|')
         {
             str[j++] = c;
@@ -83,7 +89,7 @@ int main()
         }
         double r = strtod(str, &_);
         printf("\n%lf\n", r);*/
-        count = 1;
+        count++;
     }
     // printf("%s\n",str);
     // printf("%c",fgetc(F));

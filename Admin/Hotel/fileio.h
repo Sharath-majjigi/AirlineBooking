@@ -56,7 +56,7 @@ void writeToFile(FILE *file, struct city *CITY)
     fclose(file);
 }
 
-/*READ FROM FILE
+//READ FROM FILE
 void readFromFile(FILE *file)
 {
     char str[30];
@@ -75,5 +75,4 @@ void readFromFile(FILE *file)
         fclose(file);
     }
 }
-*/
 #endif
