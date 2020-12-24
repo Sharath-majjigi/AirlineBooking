@@ -68,12 +68,13 @@ int main()
     {
         char s[90];
         extractCity(F, s);
-        printf("\n\n%s\n\n", s);
+        printf("\n\n%s\n", s);
         count_= 0;
-        while (count_ != 2)
+        while ((c = fgetc(F)) != '#')
         {
+            ungetc(c,F);
             extractHotel(F, hotelname, price, rooms);
-            printf("\nworks\n%s%lf", hotelname, *price);
+            printf("\n%s %lf %d", hotelname, *price, *rooms);
             count_++;
         }
         count++;
