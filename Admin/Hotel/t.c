@@ -51,33 +51,23 @@ int main()
 {
     FILE *F;
     F = fopen("text.txt", "r");
-    char cities[30][10];
-    float f[30];
-    int i[30];
-    char hotels[50][40];
     char c;
     char str[100];
-    int count, count_;
-    count = 0;
-    count_ = 0;
-    char *_;
     char hotelname[40];
     double *price = (double *)malloc(sizeof(double));
     int *rooms = (int *)malloc(sizeof(int));
-    while (count != 2)
+    while ((c = fgetc(F)) != EOF)
     {
+        ungetc(c,F);
         char s[90];
         extractCity(F, s);
         printf("\n\n%s\n", s);
-        count_= 0;
         while ((c = fgetc(F)) != '#')
         {
             ungetc(c,F);
             extractHotel(F, hotelname, price, rooms);
             printf("\n%s %lf %d", hotelname, *price, *rooms);
-            count_++;
         }
-        count++;
     }
     fclose(F);
     return 0;
