@@ -76,23 +76,8 @@ int main()
             printf("\nworks\n%s%lf", hotelname, *price);
             count_++;
         }
-        /* int j = 0;
-        while ((c = fgetc(F)) != '|')
-        {
-            str[j++] = c;
-        }
-        printf("%s", str);
-        j = 0;
-        while ((c = fgetc(F)) != '|')
-        {
-            str[j++] = c;
-        }
-        double r = strtod(str, &_);
-        printf("\n%lf\n", r);*/
         count++;
     }
-    // printf("%s\n",str);
-    // printf("%c",fgetc(F));
     fclose(F);
     return 0;
 }
