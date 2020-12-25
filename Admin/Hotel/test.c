@@ -32,11 +32,6 @@ struct city{
 };
 struct city* City_Head; //Think of this as first for our linked list 
 
-int lenghtList(struct 
-{
-    /* data */
-};
-)
 int isExists(FILE *file){
     if(file = fopen("text.txt","r")){
         return 1;

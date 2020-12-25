@@ -11,21 +11,12 @@ Taking this city node it gets the link for the HOTELS
 And appends a hotel type node in a FILO fashion 
 
 */
-void addhotel(struct city *C)
+void addhotel(struct city *C,char hotelname[30], double hotelprice, int hotelrooms)
 {
     struct hotel *Hotel_Head = (struct hotel *)malloc(sizeof(struct hotel));
     Hotel_Head = C->HOTELS;
-    char hotelname[30];
-    double hotelprice;
-    int hotelrooms;
 
     //Reading the input
-    printf("\nEnter the Hotel name\n");
-    scanf("%s", hotelname);
-    printf("\nEnter the hotel price\n");
-    scanf("%lf", &hotelprice);
-    printf("\nEnter the number of rooms\n");
-    scanf("%d", &hotelrooms);
 
     //A temporary node of type hotel
     struct hotel *temp = (struct hotel *)malloc(sizeof(struct hotel));
@@ -56,29 +47,23 @@ void addhotel(struct city *C)
 /*
 This function adds N hotels
 */
-void addNhotels(struct city *C, int n)
+void addNhotels(struct city *C, char hotelname[30], double hotelprice, int hotelrooms, int n)
 {
     for (int i = 0; i < n; i++)
     {
-        addhotel(C);
+        addhotel(C,hotelname[30],hotelprice,hotelrooms);
     }
 }
 
 /* 
 This is simpler and analogus to the addhotel() function
 */
-void addcity()
+void addcity(char cityname[40],  char hotelname[30], double hotelprice, int hotelrooms, int number_of_hotels)
 {
     //Variable Declarations
-    char cityname[30];
-    int number_of_hotels;
     struct city *temp = (struct city *)malloc(sizeof(struct city));
 
     //Read input
-    printf("\nEnter city name\n");
-    scanf("%s", cityname);
-    printf("\nHow many hotels in %s\n", cityname);
-    scanf("%d", &number_of_hotels);
 
     //Copy the data into node
     strcpy(temp->name, cityname);
@@ -91,13 +76,13 @@ void addcity()
     {
         temp->next_city = NULL;
         City_Head = temp;
-        addNhotels(temp, number_of_hotels); //Call function for adding hotels to this city
+        addNhotels(temp, hotelname[30], hotelprice, hotelrooms,number_of_hotels); //Call function for adding hotels to this city
     }
     else
     {
         temp->next_city = City_Head;
         City_Head = temp;
-        addNhotels(temp, number_of_hotels);
+        addNhotels(temp, hotelname[30], hotelprice, hotelrooms,number_of_hotels);
     }
 }
 #endif
