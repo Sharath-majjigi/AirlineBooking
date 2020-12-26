@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "struct.h"
-#define textfile "text_3.txt"
+#define textfile "te.txt"
 
 /*
 
@@ -27,7 +27,7 @@ void extractCity(FILE *file, char cityname[100])
 */
 void extractHotel(FILE *file, char str_h[90], double *p, int *r)
 {
-    char *str = (char *)malloc(200*sizeof(char));
+    char *str = (char *)malloc(200 * sizeof(char));
     char character, *c;
     char temp[50];
     char temp_int[50];
@@ -39,7 +39,7 @@ void extractHotel(FILE *file, char str_h[90], double *p, int *r)
         str[j++] = character;
     }
     str[j] = '|';
-    str[j+1] = '\0';
+    str[j + 1] = '\0';
     j = 0;
     while (str[j] != '|')
     {
@@ -62,7 +62,7 @@ void extractHotel(FILE *file, char str_h[90], double *p, int *r)
         temp_int[i++] = str[j];
         j++;
     }
-    temp_int[i+1]='\0';
+    temp_int[i + 1] = '\0';
     rooms = atoi(temp_int);
     *p = price;
     *r = rooms;
@@ -144,20 +144,26 @@ void readStruct()
     char c, city_name[100];
     while ((c = fgetc(F)) != EOF)
     {
-        ungetc(c, F);
-        extractCity(F, city_name);
-        struct hotel *hotel_head = (struct hotel *)malloc(sizeof(struct hotel));
-        hotel_head = NULL;
-        while ((c = fgetc(F)) != '#')
+        if (c != '\n')
         {
-            char hotelname[40];
-            double *price = (double *)malloc(sizeof(double));
-            int *rooms = (int *)malloc(sizeof(int));
             ungetc(c, F);
-            extractHotel(F, hotelname, price, rooms);
-            hotel_head = addHotel(hotel_head, hotelname, *price, *rooms);
+            extractCity(F, city_name);
+            struct hotel *hotel_head = (struct hotel *)malloc(sizeof(struct hotel));
+            hotel_head = NULL;
+            while ((c = fgetc(F)) != '#')
+            {
+                char hotelname[40];
+                double *price = (double *)malloc(sizeof(double));
+                int *rooms = (int *)malloc(sizeof(int));
+                if (c != '\n')
+                {
+                    ungetc(c, F);
+                    extractHotel(F, hotelname, price, rooms);
+                    hotel_head = addHotel(hotel_head, hotelname, *price, *rooms);
+                }
+            }
+            City_Head = addCity(City_Head, hotel_head, city_name);
         }
-        City_Head = addCity(City_Head, hotel_head, city_name);
     }
     fclose(F);
 }
@@ -167,6 +173,16 @@ void readStruct()
     DISPLAY DATA FROM NEWLY READ (city)LINKEDLIST
 
 */
+void displayCities(struct city *head)
+{
+    struct city *temp = head;
+    printf("\nAVAILABLE CITIES\n");
+    while (temp != NULL)
+    {
+        printf("\n%s\n", temp->name);
+        temp = temp->next_city;
+    }
+}
 void display()
 {
     struct city *temp_c = (struct city *)malloc(sizeof(struct city));
@@ -185,7 +201,67 @@ void display()
         temp_c = temp_c->next_city;
     }
 }
+char *choosecity(int n)
+{
+    if (n == 1)
+    {
+        char *city = (char *)malloc(40 * sizeof(char));
+        printf("\nCHOOSE A CITY : ");
+        scanf("%s", city);
+        return city;
+    }
+    else if (n == 2)
+    {
+        char *hotel = (char *)malloc(50 * sizeof(char));
+        printf("\nCHOOSE A HOTEL : ");
+        scanf("%s", hotel);
+        return hotel;
+    }
+    return "A";
+}
+float makeBill(struct city *choosencity, char hotelname[])
+{
+    struct hotel *hotelist = choosencity->HOTELS;
+    char startdate[12];
+    char enddate[12];
+    float i_startdate, i_enddate, number_of_days;
+    while (hotelist != NULL)
+    {
+        if (!strcmp(hotelname, hotelist->name))
+        {
+            printf("\nSTAY DURATION ?\nEnter Arrival Date (dd) : ");
+            scanf("%s", startdate);
+            printf("\nEnter Departure Date (dd) : ");
+            scanf("%s", enddate);
+            i_startdate = atoi(startdate);
+            i_enddate = atoi(enddate);
+            number_of_days = i_enddate - i_startdate;
+            printf("%lf",number_of_days);
+            return ((hotelist->price) * number_of_days);
+        }
+        hotelist = hotelist->next_hotel;
+    }
+    return 0;
+}
 
+void displayAcity(char cityname[], struct city *head)
+{
+    struct city *temp = head;
+    while (temp != NULL)
+    {
+        if (!strcmp(cityname, temp->name))
+            break;
+        temp = temp->next_city;
+    }
+    struct hotel *hotel_head = temp->HOTELS;
+    printf("\n\n%s\n", temp->name);
+    while (hotel_head != NULL)
+    {
+        printf("\nName : %s \t Rooms: %d \t Price : %f\n\n", hotel_head->name, hotel_head->rooms, hotel_head->price);
+        hotel_head = hotel_head->next_hotel;
+    }
+    printf("\n\nYOUR TOTAL BILL : %lf",makeBill(temp, choosecity(2)));
+}
 
 /*
 
@@ -196,7 +272,6 @@ FOLLOWING FUNCTIONS ARE FOR
 3. WRITING THAT INFO INTO A FILE
 
 */
-
 
 /*
 
@@ -314,9 +389,9 @@ struct city *addcity(struct city *City_Head_w)
 
     //Read input
     printf("\nEnter city name\n");
-    scanf("%s",cityname);
-    printf("\nHow many hotels in %s\n",cityname);
-    scanf("%d",&number_of_hotels);
+    scanf("%s", cityname);
+    printf("\nHow many hotels in %s\n", cityname);
+    scanf("%d", &number_of_hotels);
 
     strcpy(temp->name, cityname);
 
@@ -326,23 +401,27 @@ struct city *addcity(struct city *City_Head_w)
     {
         temp->next_city = NULL;
         City_Head_w = temp;
-        addNhotels(temp,number_of_hotels); 
+        addNhotels(temp, number_of_hotels);
     }
     else
     {
         temp->next_city = City_Head_w;
         City_Head_w = temp;
-        addNhotels(temp,number_of_hotels);
+        addNhotels(temp, number_of_hotels);
     }
     return City_Head_w;
 }
+
+
 int main()
 {
-    struct city *head = (struct city *)malloc(sizeof(struct city));
-    head = NULL;
-    head = addcity(head);
+     struct city *head = (struct city *)malloc(sizeof(struct city));
+     head = NULL;
+     head = addcity(head);
     writeToFile(head);
     readStruct();
-    display();
+    displayCities(City_Head);
+    displayAcity(choosecity(1), City_Head);
+    // display();
     return 0;
 }
