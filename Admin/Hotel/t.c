@@ -236,7 +236,7 @@ float makeBill(struct city *choosencity, char hotelname[])
             i_startdate = atoi(startdate);
             i_enddate = atoi(enddate);
             number_of_days = i_enddate - i_startdate;
-            printf("%lf",number_of_days);
+            printf("%lf", number_of_days);
             return ((hotelist->price) * number_of_days);
         }
         hotelist = hotelist->next_hotel;
@@ -260,7 +260,7 @@ void displayAcity(char cityname[], struct city *head)
         printf("\nName : %s \t Rooms: %d \t Price : %f\n\n", hotel_head->name, hotel_head->rooms, hotel_head->price);
         hotel_head = hotel_head->next_hotel;
     }
-    printf("\n\nYOUR TOTAL BILL : %lf",makeBill(temp, choosecity(2)));
+    printf("\n\nYOUR TOTAL BILL : %lf", makeBill(temp, choosecity(2)));
 }
 
 /*
@@ -412,12 +412,11 @@ struct city *addcity(struct city *City_Head_w)
     return City_Head_w;
 }
 
-
 int main()
 {
-     struct city *head = (struct city *)malloc(sizeof(struct city));
-     head = NULL;
-     head = addcity(head);
+    struct city *head = (struct city *)malloc(sizeof(struct city));
+    head = NULL;
+    head = addcity(head);
     writeToFile(head);
     readStruct();
     displayCities(City_Head);
