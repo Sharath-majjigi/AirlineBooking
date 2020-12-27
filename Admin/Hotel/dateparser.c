@@ -8,44 +8,61 @@
   FORMAT
 */
 int M[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-int month(int, int);
-int days(int y1, int y2, int m1, int m2, int d1, int d2)
-{
-  int i, count = 0;
-  for (i = y1; i < y2; i++)
-  {
-    if (i % 4 == 0 || i % 400 == 0 || i % 100 != 0)
-    {
-      count += 366;
-    }
-    else
-      count += 365;
-  }
-  count -= month(m1, y1);
-  count -= d1;
-  count += month(m2, y1);
-  count += d2;
-  if (count > 0)
-    return count;
-  return 0;
-}
 
-int month(int mn, int yr)
+int days (int y1, int y2, int m1, int m2, int d1, int d2)
 {
-  int i, x = 0;
-  for (i = 0; i < yr - 1; i++)
-  {
-    if (i == 1)
+    int day = 0, rem = 0;
+    if (y1 == y2)
     {
-      if (i % 4 == 0 || i % 400 == 0 || i % 100 != 0)
-        x += 29;
-      else
-        x += 28;
+        if (y1 % 4 == 0 || y1 % 400 == 0 && y1 % 100 != 0)
+        {
+            M[1] = 29;
+            return 0;
+        }
+        if (m1 == m2)
+        {
+            day = d2 - d1;
+            return 0;
+        }
+        else if (m2 > m1)
+        {
+            for (int i = m1; i < m2; i++)
+            {
+                day += M[i];
+            }
+            day += d2 - d1 ;
+        }
+        else
+        {
+            printf("Invalid dates entered...");
+        }
+        return 0;
+    }
+    else if (y2 > y1)
+    {
+        if (y2 % 4 == 0 || y2 % 400 == 0 && y2 % 100 != 0)
+        {
+            M[1] = 29;
+            return 0;
+        }
+        for (int i = 1; i < m1; i++)
+        {
+            rem += M[i];
+        }
+        rem += d1 ;
+        day = 365 - rem;
+        for (int i = 1; i < m2; i++)
+        {
+            day += M[i];
+        }
+        day += d2;
+        return day;
     }
     else
-      x += M[i];
-  }
-  return (x);
+    {
+        printf("Invalid dates entered...\n");
+    }
+    return 0;
 }
 
 /* 
@@ -112,6 +129,5 @@ int main()
   printf("\nEND DATE : ");
   scanf("%s",end);
   printf("NUMBER OF DAYS UNTIL %s : %d",end, numberofdays(start, end));
-  //printf("\n%d",days(20,21,12,1,30,1));
   return 0;
 }
