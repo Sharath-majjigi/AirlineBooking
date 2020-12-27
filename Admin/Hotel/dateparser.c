@@ -1,3 +1,9 @@
+/*
+  @AUTHORS : 
+    PRITHVIRAJ : @githubusername 
+    SHREYA : @githubusername 
+    MUZAMMIL : https://github.com/DarthMuzammil 
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
