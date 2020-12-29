@@ -1,3 +1,5 @@
+#ifndef HOTEL
+#define HOTEL
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -136,9 +138,9 @@ struct city *addCity(struct city *Head, struct hotel *Hotel_Head, char cityname[
     DRIVER FUNCTION FOR READING FROM FILE
 
 */
-void readStruct()
+struct city* readStruct(struct city* C)
 {
-    City_Head = NULL;
+    C = NULL;
     FILE *F;
     F = fopen(textfile, "r");
     struct city *city_ptr = (struct city *)malloc(sizeof(struct city));
@@ -163,10 +165,11 @@ void readStruct()
                     hotel_head = addHotel(hotel_head, hotelname, *price, *rooms);
                 }
             }
-            City_Head = addCity(City_Head, hotel_head, city_name);
+            C = addCity(C, hotel_head, city_name);
         }
     }
     fclose(F);
+    return C;
 }
 
 /*
@@ -184,12 +187,12 @@ void displayCities(struct city *head)
         temp = temp->next_city;
     }
 }
-void display()
+void display(struct city* C)
 {
     struct city *temp_c = (struct city *)malloc(sizeof(struct city));
     struct hotel *hotel_head = (struct hotel *)malloc(sizeof(struct hotel));
     hotel_head = NULL;
-    temp_c = City_Head;
+    temp_c = C;
     while (temp_c != NULL)
     {
         printf("\n\n%s\n", temp_c->name);
@@ -410,16 +413,4 @@ struct city *addcity(struct city *City_Head_w)
     }
     return City_Head_w;
 }
-
-int main()
-{
-    struct city *head = (struct city *)malloc(sizeof(struct city));
-    head = NULL;
-    head = addcity(head);
-    writeToFile(head);
-    readStruct();
-    displayCities(City_Head);
-    displayAcity(choosecity(1), City_Head);
-    // display();
-    return 0;
-}
+#endif
