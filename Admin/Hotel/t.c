@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "struct.h"
+#include "dateparser.h"
 #define textfile "te.txt"
 
 /*
@@ -224,19 +225,17 @@ float makeBill(struct city *choosencity, char hotelname[])
     struct hotel *hotelist = choosencity->HOTELS;
     char startdate[12];
     char enddate[12];
-    float i_startdate, i_enddate, number_of_days;
+    float number_of_days;
     while (hotelist != NULL)
     {
         if (!strcmp(hotelname, hotelist->name))
         {
-            printf("\nSTAY DURATION ?\nEnter Arrival Date (dd) : ");
+            printf("\n\nEnter Arrival Date (dd/mm/yy) : ");
             scanf("%s", startdate);
-            printf("\nEnter Departure Date (dd) : ");
+            printf("\nEnter Departure Date (dd/mm/yy) : ");
             scanf("%s", enddate);
-            i_startdate = atoi(startdate);
-            i_enddate = atoi(enddate);
-            number_of_days = i_enddate - i_startdate;
-            printf("%lf", number_of_days);
+            number_of_days = numberofdays(startdate,enddate);
+            printf("STAY DURATION : %d days", (int)number_of_days);
             return ((hotelist->price) * number_of_days);
         }
         hotelist = hotelist->next_hotel;

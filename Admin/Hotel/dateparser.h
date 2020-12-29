@@ -1,3 +1,5 @@
+#ifndef DATE
+#define DATE
 /*
   @AUTHORS : 
     PRITHVIRAJ : @githubusername 
@@ -13,36 +15,33 @@
   TWO DATES GIVEN INPUT IN INT 
   FORMAT
 */
-int M[12] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int M[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
-int days (int y1, int y2, int m1, int m2, int d1, int d2)
+int days(int y1, int y2, int m1, int m2, int d1, int d2)
 {
     int day = 0, rem = 0;
     if (y1 == y2)
     {
+        if (m1 == m2)
+        {
+            day = d2 - d1;
+            return day;
+        }
         if (y1 % 4 == 0 || y1 % 400 == 0 && y1 % 100 != 0)
         {
             M[1] = 29;
             return 0;
         }
-        if (m1 == m2)
-        {
-            day = d2 - d1;
-            return 0;
-        }
-        else if (m2 > m1)
+
+        if (m2 > m1)
         {
             for (int i = m1; i < m2; i++)
             {
                 day += M[i];
             }
-            day += d2 - d1 ;
+            day += d2 - d1;
+            return day;
         }
-        else
-        {
-            printf("Invalid dates entered...");
-        }
-        return 0;
     }
     else if (y2 > y1)
     {
@@ -55,7 +54,7 @@ int days (int y1, int y2, int m1, int m2, int d1, int d2)
         {
             rem += M[i];
         }
-        rem += d1 ;
+        rem += d1;
         day = 365 - rem;
         for (int i = 1; i < m2; i++)
         {
@@ -63,10 +62,6 @@ int days (int y1, int y2, int m1, int m2, int d1, int d2)
         }
         day += d2;
         return day;
-    }
-    else
-    {
-        printf("Invalid dates entered...\n");
     }
     return 0;
 }
@@ -127,13 +122,4 @@ int numberofdays(char start[], char end[])
           atoi(parse(start)[0]),
           atoi(parse(end)[0])));
 }
-int main()
-{
-  char start[12],end[12];
-  printf("\n\nENTER TWO DATES\n\nSTART DATE : ");
-  scanf("%s",start);
-  printf("\nEND DATE : ");
-  scanf("%s",end);
-  printf("NUMBER OF DAYS UNTIL %s : %d",end, numberofdays(start, end));
-  return 0;
-}
+#endif
