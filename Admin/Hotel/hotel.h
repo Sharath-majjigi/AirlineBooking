@@ -5,6 +5,7 @@
 #include <string.h>
 #include "struct.h"
 #include "dateparser.h"
+#include "display.h"
 #define textfile "te.txt"
 
 /*
@@ -180,10 +181,18 @@ struct city* readStruct(struct city* C)
 void displayCities(struct city *head)
 {
     struct city *temp = head;
-    printf("\nAVAILABLE CITIES\n");
+    printf("\n");
+    dashes();
+    printf("\n");
+    print("A V A I L A B L E   C I T I E S");
+    printf("\n");
+    dashes();
     while (temp != NULL)
     {
-        printf("\n%s\n", temp->name);
+        //printf("\n%s\n", temp->name);
+        printf("\n");
+        print(temp->name);
+        printf("\n");
         temp = temp->next_city;
     }
 }
@@ -256,10 +265,18 @@ void displayAcity(char cityname[], struct city *head)
         temp = temp->next_city;
     }
     struct hotel *hotel_head = temp->HOTELS;
-    printf("\n\n%s\n", temp->name);
+    system("clear");
+    dashes();
+    print(temp->name);
+    dashes();
+    int A = colsize()/3;
+    int B = A/2;
+    printf("\n%*s%*s|%*s%*s|%*s%*s\n",B, " ", -A + B, "NAME",B, " ", -A + B, "ROOMS",B, " ", -A + B, "PRICE");
+    dashes();
     while (hotel_head != NULL)
     {
-        printf("\nName : %s \t Rooms: %d \t Price : %f\n\n", hotel_head->name, hotel_head->rooms, hotel_head->price);
+        
+        printf("\n%*s%*d%f\n",(int)(-strlen("NAME   ")), hotel_head->name,(int)(-strlen("ROOMS   ")), hotel_head->rooms, hotel_head->price);
         hotel_head = hotel_head->next_hotel;
     }
     printf("\n\nYOUR TOTAL BILL : %lf", makeBill(temp, choosecity(2)));

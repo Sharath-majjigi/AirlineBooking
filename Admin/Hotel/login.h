@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-int login(int whoareyou)
+char* login(int whoareyou, char* returnusername)
 {
     int flag = -1;
     FILE *f;
@@ -18,9 +18,9 @@ int login(int whoareyou)
         char str[100][30];
         char u[30], p[30];
         f = fopen("admin_db.txt", "r");
-        printf("\nEnter your username\n");
+        printf("\nU S E R N A M E : ");
         scanf("%s", u);
-        printf("\nEnter your password\n");
+        printf("\nP A S S W O R D : ");
         scanf("%s", p);
         if (f != NULL)
         {
@@ -35,7 +35,8 @@ int login(int whoareyou)
                 if (!(strcmp(u, str[i - 1])) && !(strcmp(p, str[i])))
                 {
                     fclose(f);
-                    return 1;
+                    strcpy(returnusername,u);
+                    return returnusername;
                 }
             }
             if (i == 0)
@@ -58,9 +59,9 @@ int login(int whoareyou)
         char str[100][30];
         char u[30], p[30];
         f = fopen("user_db.txt", "r");
-        printf("\nEnter your username\n");
+        printf("\nU S E R N A M E : ");
         scanf("%s", u);
-        printf("\nEnter your password\n");
+        printf("\nP A S S W O R D : ");
         scanf("%s", p);
         if (f != NULL)
         {
@@ -75,7 +76,8 @@ int login(int whoareyou)
                 if (!(strcmp(u, str[i - 1])) && !((strcmp(p, str[i]))))
                 {
                     fclose(f);
-                    return 1;
+                    strcpy(returnusername,u);
+                    return returnusername;
 
                 }
             }
@@ -90,6 +92,6 @@ int login(int whoareyou)
         }
     }
     fclose(f);
-    return flag;
+    return NULL;
 }
 #endif
