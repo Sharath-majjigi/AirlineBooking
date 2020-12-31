@@ -67,6 +67,7 @@ int main()
                 float *bill = (float *)malloc(2 * sizeof(float));
                 if (displayAcity(choosecity(1), head_2, bill) != NULL)
                 {
+                    writeAll(head_2);
                     SYSTEM();
                     dashes();
                     printf("\n");

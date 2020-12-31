@@ -263,6 +263,7 @@ float *makeBill(struct city *choosencity, char hotelname[], float *prt)
         str_2[j] = '\0';
         if (!strcmp(str, str_2))
         {
+            hotelist->rooms -= 1;
             flag = 1;
             printf("\n\nEnter Arrival Date (dd/mm/yy) : ");
             scanf("%s", startdate);
@@ -368,10 +369,10 @@ int isExists(FILE *file)
     }
     return 0;
 }
-void writeToFile(struct city *CITY)
+void writeToFile(struct city *CITY, int option)
 {
     FILE *file;
-    if (!isExists(file))
+    if (!isExists(file) || option == 1)
     {
         file = fopen(textfile, "w");
         fprintf(file, "%s,", CITY->name);
@@ -408,6 +409,24 @@ void writeToFile(struct city *CITY)
         }
     }
     fclose(file);
+}
+void writeAll(struct city* HEAD){
+    struct city* temp = HEAD;
+    int count = 0;
+    if(temp != NULL){
+       while(temp != NULL){
+           if(count == 0){
+            writeToFile(temp,1);
+            temp = temp->next_city;
+           }
+           else{
+
+            writeToFile(temp,0);
+            temp = temp->next_city;
+           }
+           count++;
+       }
+    }
 }
 
 /*

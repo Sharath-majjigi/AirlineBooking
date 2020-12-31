@@ -32,7 +32,7 @@ int main()
     printf("%*s",(int)(colsize()/2 + strlen("ADMIN PANEL")/2),"ADMIN PANEL");
     dashes();
     head = addcity(head);
-    writeToFile(head);
+    writeToFile(head,0);
     head_2 = readStruct(head_2);
     display(head_2);
     return 0;
