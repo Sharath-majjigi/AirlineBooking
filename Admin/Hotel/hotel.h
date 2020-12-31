@@ -310,7 +310,7 @@ float *displayAcity(char cityname[], struct city *head, float *bill)
     if (flag == 1)
     {
         struct hotel *hotel_head = temp->HOTELS;
-        system("clear");
+        SYSTEM();
         dashes();
         printf("\n");
         print(temp->name);

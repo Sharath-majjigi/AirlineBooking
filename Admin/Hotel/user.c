@@ -11,7 +11,7 @@ int main()
     char *didlogin = (char *)malloc(100 * sizeof(char));
     char choice, f;
     label_4:
-    system("clear");
+    SYSTEM();
     dashes();
     printf("\n");
     print("TRIP PLANNER");
@@ -27,7 +27,7 @@ int main()
     if (_choice == 1)
     {
     loginagain:
-        system("clear");
+        SYSTEM();
         dashes();
         printf("\n");
         print("L O G I N 🔑 ");
@@ -36,7 +36,7 @@ int main()
         didlogin = login(2, didlogin);
         if (didlogin)
         {
-            system("clear");
+            SYSTEM();
             char welcome_message[200] = "Welcome ";
             strcat(welcome_message, didlogin);
             dashes();
@@ -55,7 +55,7 @@ int main()
             if (choice_ == 1)
             {
             label_exit:
-                system("clear");
+                SYSTEM();
                 struct city *head_2 = (struct city *)malloc(sizeof(struct city));
                 head_2 = NULL;
                 head_2 = readStruct(head_2);
@@ -63,7 +63,7 @@ int main()
                 float *bill = (float *)malloc(2 * sizeof(float));
                 if (displayAcity(choosecity(1), head_2, bill) != NULL)
                 {
-                    system("clear");
+                    SYSTEM();
                     dashes();
                     printf("\n");
                     print("     B I L L 💰");
@@ -85,7 +85,7 @@ int main()
                 }
                 else
                 {
-                    system("clear");
+                    SYSTEM();
                     dashes();
                     print("C I T Y   N O T   F O U N D ⛔️");
                     dashes();
@@ -120,14 +120,14 @@ int main()
                 scanf("%c", &c);
                 if (c == 'Y' || c == 'y')
                 {
-                    system("clear");
+                    SYSTEM();
                     goto label2;
                 }
             }
         }
         else
         {
-            system("clear");
+            SYSTEM();
             dashes();
             print("L O G I N  F A I L E D 😞");
             dashes();
@@ -146,7 +146,7 @@ int main()
         }
     }
     else if(_choice == 2){
-        system("clear");
+        SYSTEM();
           dashes();
         printf("\n");
         print("S I G N  U P  📃");
@@ -155,7 +155,7 @@ int main()
         signup(2);
     }
     else{
-        system("clear");
+        SYSTEM();
          dashes();
         printf("\n");
         print("I N V A L I D  O P E R A T I O N ⛔️");
