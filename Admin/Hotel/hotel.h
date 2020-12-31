@@ -1,6 +1,8 @@
 #ifndef HOTEL
 #define HOTEL
 #include <stdio.h>
+#include <time.h>
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 #include "struct.h"
@@ -139,7 +141,7 @@ struct city *addCity(struct city *Head, struct hotel *Hotel_Head, char cityname[
     DRIVER FUNCTION FOR READING FROM FILE
 
 */
-struct city* readStruct(struct city* C)
+struct city *readStruct(struct city *C)
 {
     C = NULL;
     FILE *F;
@@ -196,7 +198,7 @@ void displayCities(struct city *head)
         temp = temp->next_city;
     }
 }
-void display(struct city* C)
+void display(struct city *C)
 {
     struct city *temp_c = (struct city *)malloc(sizeof(struct city));
     struct hotel *hotel_head = (struct hotel *)malloc(sizeof(struct hotel));
@@ -232,54 +234,110 @@ char *choosecity(int n)
     }
     return "A";
 }
-float makeBill(struct city *choosencity, char hotelname[])
+float *makeBill(struct city *choosencity, char hotelname[], float *prt)
 {
     struct hotel *hotelist = choosencity->HOTELS;
+    char str[strlen(hotelname)];
+    int i;
+    int flag = 0;
     char startdate[12];
     char enddate[12];
     float number_of_days;
+     for (i = 0; hotelname[i] != '\0'; i++)
+    {
+        str[i] = tolower(hotelname[i]);
+    }
+    str[i] = '\0';
     while (hotelist != NULL)
     {
-        if (!strcmp(hotelname, hotelist->name))
+         int j;
+        char str_2[strlen(hotelist->name)];
+        for (j = 0; hotelist->name[j] != '\0'; j++)
         {
+            str_2[j] = tolower(hotelist->name[j]);
+        }
+        str_2[j] = '\0';
+        if (!strcmp(str, str_2))
+        {
+            flag = 1;
             printf("\n\nEnter Arrival Date (dd/mm/yy) : ");
             scanf("%s", startdate);
             printf("\nEnter Departure Date (dd/mm/yy) : ");
             scanf("%s", enddate);
-            number_of_days = numberofdays(startdate,enddate);
-            printf("STAY DURATION : %d days", (int)number_of_days);
-            return ((hotelist->price) * number_of_days);
+            number_of_days = numberofdays(startdate, enddate);
+            prt[0] = number_of_days;
+            prt[1] = ((hotelist->price) * number_of_days);
+            return prt;
+            // return ((hotelist->price) * number_of_days);
         }
         hotelist = hotelist->next_hotel;
     }
-    return 0;
+    if(flag != 0)
+    { return prt;
+    }
+    else{
+        return NULL;
+    }
 }
 
-void displayAcity(char cityname[], struct city *head)
+float *displayAcity(char cityname[], struct city *head, float *bill)
 {
     struct city *temp = head;
+    char str[strlen(cityname)];
+    int i;
+    int flag = 0;
+    for (i = 0; cityname[i] != '\0'; i++)
+    {
+        str[i] = tolower(cityname[i]);
+    }
+    str[i] = '\0';
     while (temp != NULL)
     {
-        if (!strcmp(cityname, temp->name))
+        int j;
+        char str_2[strlen(temp->name)];
+        for (j = 0; temp->name[j] != '\0'; j++)
+        {
+            str_2[j] = tolower(temp->name[j]);
+        }
+        str_2[j] = '\0';
+        if (!strcmp(str, str_2))
+        {
+            flag = 1;
             break;
+        }
         temp = temp->next_city;
     }
-    struct hotel *hotel_head = temp->HOTELS;
-    system("clear");
-    dashes();
-    print(temp->name);
-    dashes();
-    int A = colsize()/3;
-    int B = A/2;
-    printf("\n%*s%*s|%*s%*s|%*s%*s\n",B, " ", -A + B, "NAME",B, " ", -A + B, "ROOMS",B, " ", -A + B, "PRICE");
-    dashes();
-    while (hotel_head != NULL)
+    if (flag == 1)
     {
-        
-        printf("\n%*s%*d%f\n",(int)(-strlen("NAME   ")), hotel_head->name,(int)(-strlen("ROOMS   ")), hotel_head->rooms, hotel_head->price);
-        hotel_head = hotel_head->next_hotel;
+        struct hotel *hotel_head = temp->HOTELS;
+        system("clear");
+        dashes();
+        printf("\n");
+        print(temp->name);
+        printf("\n");
+        dashes();
+        int A = colsize() / 3;
+        int B = A / 2;
+        printf("%*s%*s|%*s%*s|%*s%*s", B, " ", -A + B, "NAME", B - 4, " ", -A + B, "ROOMS", B - 2, " ", -A + (B + 2), "PRICE");
+        dashes();
+        while (hotel_head != NULL)
+        {
+            int B_ = A / 2;
+            int size_n = strlen(hotel_head->name);
+            size_n -= 7;
+            if (size_n >= 1)
+            {
+                B_ -= size_n;
+            }
+            printf("%*s%*s|%*s%*d|%*s%*.0f", B_, " ", -A + B_, hotel_head->name, B - 2, " ", -A + B + 2, hotel_head->rooms, B - 2, " ", -A + (B + 2), hotel_head->price);
+            dashes();
+            hotel_head = hotel_head->next_hotel;
+        }
+        return (makeBill(temp, choosecity(2), bill));
     }
-    printf("\n\nYOUR TOTAL BILL : %lf", makeBill(temp, choosecity(2)));
+    else{
+        return NULL;
+    }
 }
 
 /*
