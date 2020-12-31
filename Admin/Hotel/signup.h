@@ -1,3 +1,7 @@
+/*
+  @AUTHORS : 
+    MUZAMMIL : https://github.com/DarthMuzammil 
+*/
 #ifndef SIGNUP
 #define SIGNUP
 #include <stdio.h>

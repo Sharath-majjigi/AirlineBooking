@@ -1,3 +1,7 @@
+/*
+  @AUTHORS : 
+    MUZAMMIL : https://github.com/DarthMuzammil 
+*/
 #ifndef HOTEL
 #define HOTEL
 #include <stdio.h>

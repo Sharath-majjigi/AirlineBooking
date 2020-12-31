@@ -1,3 +1,7 @@
+/*
+  @AUTHORS : 
+    MUZAMMIL : https://github.com/DarthMuzammil 
+*/
 #include "hotel.h"
 #include "signup.h"
 #include "login.h"

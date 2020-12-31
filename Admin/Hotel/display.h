@@ -1,3 +1,7 @@
+/*
+  @AUTHORS : 
+    MUZAMMIL : https://github.com/DarthMuzammil 
+*/
 #ifndef DISPLAY
 #define DISPLAY
 #include <stdio.h>

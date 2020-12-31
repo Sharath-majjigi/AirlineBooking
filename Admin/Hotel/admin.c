@@ -1,3 +1,7 @@
+/*
+  @AUTHORS : 
+    MUZAMMIL : https://github.com/DarthMuzammil 
+*/
 #include "hotel.h"
 #include <sys/ioctl.h> 
 #include <unistd.h> 
